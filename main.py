@@ -108,7 +108,7 @@ def to_be(dictionary, course, group, student, subject):
 def add_grade(dictionary, course, group, student, subject, grade):
     if (to_be(dictionary, course, group, student, subject)):
         dictionary[course][group][student][subject].append(grade)
-        print(f"Оцінка {grade} додана до предмету '{subject}' для студента '{student}'.")
+        print(f"Оцінка {grade} додана до предмету {subject} для студента {student}")
 
 #Федорченков Андрій, допоміжна функція виводу
 def print_grades(dictionary, course, group, student, subject):
