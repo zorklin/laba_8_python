@@ -119,3 +119,83 @@ def print_grades(dictionary, course, group, student, subject):
 print_grades(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
 add_grade(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра", 80)
 print_grades(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
+
+
+
+# Плутенко Олексій. Існуюча структура словника є ієрархічною, що дозволяє ефективно зберігати оцінки
+# студентів за курсами та групами. Цей підхід забезпечує швидкий доступ до інформації про конкретних
+# студентів, роблячи його інтуїтивно зрозумілим. Також було б корисно додати функції для отримання
+# всіх предметів учнів, а також для обчислення середнього значення оцінок по кожному з предметів. Крім того,
+# реалізація меню дозволить користувачам легше взаємодіяти з системою, роблячи її більш зручною та зрозумілою.
+
+# Функція для отримання усіх предметів студента
+def get_studen_subjects(dictionary, course, group, student):
+    if course in dictionary and group in dictionary[course] and student in dictionary[course][group]:
+        subjects = dictionary[course][group][student]
+        print(f"Предмети для студента {student}:")
+        for subject in subjects:
+            print(f"{subject}: {subjects[subject]}")
+    else:
+        print(f"Студента {student} не знайдено в курсі {course}, групі {group}.")
+
+get_studen_subjects(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович")
+
+
+# Функція для обчислення середньої оцінки
+def calculate_average_grade(dictionary, course, group, student, subject):
+    if to_be(dictionary, course, group, student, subject):
+        grades = dictionary[course][group][student][subject]
+        average = sum(grades) / len(grades) if grades else None
+        print(f"Середня оцінка для {student} з предмету {subject}: {average:.2f}")
+
+calculate_average_grade(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
+
+
+# Плутенко Олексій, функція меню для взаємодії з користувачем
+def menu():
+    while True:
+        print("\nМеню:")
+        print("1. Вивести оцінки студента")
+        print("2. Додати оцінку")
+        print("3. Отримати всі предмети студента")
+        print("4. Обчислити середню оцінку")
+        print("5. Вихід")
+
+        choice = input("Виберіть опцію (1-5): ")
+
+        if choice == '1':
+            course = input("Введіть курс: ")
+            group = input("Введіть групу: ")
+            student = input("Введіть ім'я студента: ")
+            subject = input("Введіть предмет: ")
+            print_grades(student_info, course, group, student, subject)
+
+        elif choice == '2':
+            course = input("Введіть курс: ")
+            group = input("Введіть групу: ")
+            student = input("Введіть ім'я студента: ")
+            subject = input("Введіть предмет: ")
+            grade = int(input("Введіть оцінку: "))
+            add_grade(student_info, course, group, student, subject, grade)
+
+        elif choice == '3':
+            course = input("Введіть курс: ")
+            group = input("Введіть групу: ")
+            student = input("Введіть ім'я студента: ")
+            get_studen_subjects(student_info, course, group, student)
+
+        elif choice == '4':
+            course = input("Введіть курс: ")
+            group = input("Введіть групу: ")
+            student = input("Введіть ім'я студента: ")
+            subject = input("Введіть предмет: ")
+            calculate_average_grade(student_info, course, group, student, subject)
+
+        elif choice == '5':
+            print("Вихід з програми.")
+            break
+
+        else:
+            print("Невірний вибір, спробуйте ще раз.")
+
+menu()
