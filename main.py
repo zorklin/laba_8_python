@@ -116,6 +116,30 @@ def print_grades(dictionary, course, group, student, subject):
         grades = dictionary[course][group][student][subject]
         print(f"Курс: {course}, група: {group}, студент: {student}, предмет: {subject}, оцінки: {grades}")
 
+#Попов Максим, виведення рейтингу студентів курсу на основі середнього балу
+def rating(dictionary, course):
+    if course not in dictionary:
+        print("Такого курсу немає!")
+        return
+    students = []
+    for group in dictionary[course]:
+        for student in dictionary[course][group]:
+            average = 0
+            for subject in dictionary[course][group][student]:
+                average += sum(dictionary[course][group][student][subject])/len(dictionary[course][group][student][subject])
+            average /= len(dictionary[course][group][student])
+            students.append((student, group, average))
+    students.sort(key=lambda value: -value[2])
+    print(course, "рейтинг")
+    i=1
+    for student in students:
+        print(str(i)+". ПІБ:", student[0], "\t\tГрупа:", student[1], "\t\tСередній бал:", student[2])
+        i+=1
+
+
+
 print_grades(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
 add_grade(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра", 80)
 print_grades(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
+
+rating(student_info, "Перший курс")
