@@ -136,8 +136,24 @@ def rating(dictionary, course):
         print(str(i)+". ПІБ:", student[0], "\t\tГрупа:", student[1], "\t\tСередній бал:", student[2])
         i+=1
 
+#Меша Павло, виведення максимальної, мінімальної оцінки та кількості оцінок студента заданого курсу ,
+# якщо є оцінка менше 60 балів, видалення оцінок за заданим предметом  
+def max_grade_student(dictionary, course, group, student, subject):
+    if to_be(dictionary, course, group, student, subject):
+        grades = dictionary[course][group][student][subject]
+        max_grade = max(grades)
+        min_grade = min(grades)
+        if min_grade < 60:
+            del dictionary[course][group][student][subject]   
+            print(f"Видалено {student} предмет {subject}: {min_grade}")
+        else:     
+            kol=len(grades)
+            print(f" {student}")
+            print(f"Кількість оцінок з предмету {subject}: {kol}")
+            print(f"Максимальна оцінка з предмету {subject}: {max_grade}")
+            print(f"Мінімальна оцінка з предмету {subject}: {min_grade}")
 
-
+max_grade_student(student_info, "Перший курс", "ІВ 41", "Мельник Олег Васильович", "Python")
 print_grades(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
 add_grade(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра", 80)
 print_grades(student_info, "Третій курс", "УН 43", "Костюк Андрій Петрович", "Алгебра")
